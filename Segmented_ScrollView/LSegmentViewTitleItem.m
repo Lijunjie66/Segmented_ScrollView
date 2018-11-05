@@ -21,6 +21,14 @@
 #define _defaultTitleColor_Highlight     [UIColor redColor]
 
 @interface LSegmentViewTitleItem()
+{
+    BOOL _hasNormalColor;
+    BOOL _hasHighlightColor;
+    BOOL _touchedFlag;
+    id   _target;
+    SEL  _action;
+}
+
 
 @property (nonatomic, strong) UILabel *titleLabel;
 
@@ -60,10 +68,41 @@
     
 }
 
+// 计算它应该具有的高度，方便调用
++ (CGFloat)calcuWidth:(NSString *)title {
+    LSegmentViewTitleItem *item = [[LSegmentViewTitleItem alloc] initWithFrame:(CGRectZero) title:title];
+    return [item calcuEidth] + item.space;
+}
 
+#pragma mark -- 状态 -->（非选中、选中、标题、字体、间距）
+- (void)setNormalColor:(NSString *)normalColor {
+    _normalColor = normalColor;
+    _hasNormalColor = YES;
+    [self setHighlight:_highlight];
+}
+- (void)setHighlightColor:(NSString *)highlightColor {
+    _highlightColor = highlightColor;
+    _hasHighlightColor = YES;
+    [self setHighlight:_highlight];
+}
+- (void)setTitle:(NSString *)title {
+    _title = title;
+    self.titleLabel.text = title;
+    [self setNeedsLayout];
+}
+- (void)setFont:(UIFont *)font {
+    self.titleLabel.font = font;
+}
+- (void)setSpace:(CGFloat)space {
+    _space = space;
+    [self setNeedsLayout];
+}
 
-
-
+// 设置 被选中时，改变颜色
+- (void)setHighlight:(BOOL)highlight {
+    _highlight = highlight;
+    self.titleLabel.textColor = highlight == YES ? _hasHighlightColor == YES ? self.highlightColor : _defaultTitleColor_Highlight : _hasNormalColor == YES ? self.normalColor : _defaultTitleColor_Normal;
+}
 
 
 
