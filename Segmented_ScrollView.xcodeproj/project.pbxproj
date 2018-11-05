@@ -15,6 +15,7 @@
 		9C1C24D6218C502800463CCA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1C24D5218C502800463CCA /* main.m */; };
 		9C1C24DE218C52EA00463CCA /* LSegmentViewTitleItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1C24DD218C52EA00463CCA /* LSegmentViewTitleItem.m */; };
 		9C3E9287218FE93D007A8183 /* UIView+Sizes.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3E9286218FE93D007A8183 /* UIView+Sizes.m */; };
+		9C3E928D2190407C007A8183 /* LSegmentItemsContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3E928C2190407C007A8183 /* LSegmentItemsContentView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,8 @@
 		9C3E9285218FE93D007A8183 /* UIView+Sizes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+Sizes.h"; sourceTree = "<group>"; };
 		9C3E9286218FE93D007A8183 /* UIView+Sizes.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+Sizes.m"; sourceTree = "<group>"; };
 		9C3E928A218FF5FD007A8183 /* Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Header.h; sourceTree = "<group>"; };
+		9C3E928B2190407C007A8183 /* LSegmentItemsContentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSegmentItemsContentView.h; sourceTree = "<group>"; };
+		9C3E928C2190407C007A8183 /* LSegmentItemsContentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSegmentItemsContentView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +106,8 @@
 			children = (
 				9C1C24DC218C52EA00463CCA /* LSegmentViewTitleItem.h */,
 				9C1C24DD218C52EA00463CCA /* LSegmentViewTitleItem.m */,
+				9C3E928B2190407C007A8183 /* LSegmentItemsContentView.h */,
+				9C3E928C2190407C007A8183 /* LSegmentItemsContentView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -181,6 +186,7 @@
 				9C1C24DE218C52EA00463CCA /* LSegmentViewTitleItem.m in Sources */,
 				9C1C24D6218C502800463CCA /* main.m in Sources */,
 				9C3E9287218FE93D007A8183 /* UIView+Sizes.m in Sources */,
+				9C3E928D2190407C007A8183 /* LSegmentItemsContentView.m in Sources */,
 				9C1C24C8218C502500463CCA /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -32,6 +32,9 @@ NS_ASSUME_NONNULL_BEGIN
 // 给它一个需要显示的字符串和它的位置，让它自己搞定
 - (instancetype)initWithFrame:(CGRect)frame title:(NSString *)title; // 初始化
 
+// 添加 触发点击事件
+- (void)addTarget:(id)target action:(SEL)action;
+
 // 计算title高度
 + (CGFloat)calcuWidth:(NSString *)title;
 

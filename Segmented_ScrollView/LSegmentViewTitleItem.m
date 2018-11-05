@@ -22,11 +22,11 @@
 
 @interface LSegmentViewTitleItem()
 {
-    BOOL _hasNormalColor;
-    BOOL _hasHighlightColor;
-    BOOL _touchedFlag;
-    id   _target;
-    SEL  _action;
+    BOOL _hasNormalColor;     // 未选中
+    BOOL _hasHighlightColor;  // 选中
+    BOOL _touchedFlag;        // 我们希望点击内部并在内部抬起的时候让target去执行action，所以我们需要一个实例变量来记录是不是在内部点击
+    id   _target;  // 触发点击事件(参数)
+    SEL  _action;  // 触发点击事件(参数)
 }
 
 
@@ -104,8 +104,41 @@
     self.titleLabel.textColor = highlight == YES ? _hasHighlightColor == YES ? self.highlightColor : _defaultTitleColor_Highlight : _hasNormalColor == YES ? self.normalColor : _defaultTitleColor_Normal;
 }
 
+#pragma mark -- touch
 
-
+- (void)addTarget:(id)target action:(SEL)action {
+    _target = target;
+    _action = action;
+}
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    UITouch *touch = touches.anyObject;  // 获取一个点击
+    CGPoint touchPoint = [touch locationInView:self]; // 获取这个点击在哪个位置
+    if (touchPoint.x >= 0 && touchPoint.x <= self.width && touchPoint.y >= 0 && touchPoint.y <= self.height) {
+        [UIView animateWithDuration:0.1 animations:^{
+            // 在里面点击的就是YES哦。
+            // 而且改变一下透明度告诉用户：（当点击button时，透明度改变）
+            self.alpha = 0.2;
+            self->_touchedFlag = YES;
+            
+        }];
+    }
+}
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    UITouch *touch = touches.anyObject;
+    CGPoint touchPoint = [touch locationInView:self];
+    if (touchPoint.x >= 0 && touchPoint.x <= self.width && touchPoint.y >= 0 &&touchPoint.y <= self.height) {
+        if (_touchedFlag) {
+            // 在里面 点击之后手抬起来 而且还是YES，那么肯定是在里面点击，在里面抬起啦。
+            [_target performSelector:_action withObject:self];
+        }
+    }
+    // 恢复标记
+    _touchedFlag = NO;
+    // 恢复透明度
+    [UIView animateWithDuration:0.1 animations:^{
+        self.alpha = 1;
+    }];
+}
 
 #pragma mark -- 懒加载（titleLabel初始化）（OC里的懒加载的写法是重写某一个属性的getter，因为有些情况下我们并不能确定什么时候初始化一个数组或者字典。）
 // 包括了初始化、颜色、字体、居中、添加为self的子视图
