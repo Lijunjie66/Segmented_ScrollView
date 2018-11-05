@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LSegmentViewTitleItem.h"
 
 /*
  *   这个view类是承载item的容器，并且来布局item
@@ -19,6 +20,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface LSegmentItemsContentView : UIView
 
 // 初始化
+- (instancetype)initWithFrame:(CGRect)frame titles:(NSArray <NSString *>*)titles;
+
+
 
 @end
 
