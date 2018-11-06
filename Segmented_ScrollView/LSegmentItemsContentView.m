@@ -98,7 +98,52 @@
     
 }
 
-#pragma mark -- 懒加载
+#pragma mark - 代理
+// 这是每一个item的点击事件
+- (void)buttonAction:(LSegmentViewTitleItem *)sender {
+    NSInteger index = [self.buttonsArray indexOfObject:sender];
+    [self setPage:index];
+    
+    // 外界设置代理之后，就可以让代理去执行我们想要让它执行的协议方法，但在这之前，需要确定代理是否存在，代理有没有实现协议方法，否则崩溃😖。
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didSelectedButtonAtIndex:)]) {
+        [self.delegate didSelectedButtonAtIndex:index];
+    }
+    
+}
+- (void)setPage:(NSInteger)page {
+    if (_page == page) {
+        return;
+    }
+    _page = page;
+    [self moveToPage:page];
+}
+- (void)moveToPage:(NSInteger)page {
+    if (page > self.buttonsArray.count) {
+        return;
+    }
+    LSegmentViewTitleItem *item = self.buttonsArray[page];
+    _currentItem.highlight = NO;
+    _currentItem = item;
+    item.highlight = YES;
+    [UIView animateWithDuration:0.2 animations:^{
+        CGRect buttonFrme = item.frame;
+        CGRect lineFrame = self.line.frame;
+        lineFrame.origin.x = buttonFrme.origin.x;
+        lineFrame.size.width = buttonFrme.size.width;
+        self.line.frame = lineFrame;
+        
+    } completion:^(BOOL finished) {
+        if (finished) {
+        }
+    }];
+}
+
+
+
+
+#pragma mark -- 懒加载  （需要注意在getter方法里切勿使用self.buttonsArray，因为self.buttonsArray会调用getter方法，造成死循环 "。）
+// 所谓的懒加载可以定义为：延时加载，即当对象需要用到的时候再去加载。其实就是所谓的重写对象的get方法,当系统或者开发者调用对象的get方法时，再去加载对象。
+// 需要注意：重写get方法时，先判断对象当前是否为空，为空的话再去实例化对象
 - (NSMutableArray *)buttonsArray {
     if (!_buttonsArray) {
         _buttonsArray = [[NSMutableArray alloc] init];
