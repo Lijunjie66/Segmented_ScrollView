@@ -30,7 +30,7 @@
     if (self= [super initWithFrame:frame]) {
         _titleHeight = height;
         _viewControllers = viewControllers;
-        
+        [self setupAllViews];
     }
     return self;
 }
@@ -44,6 +44,7 @@
  *
  */
 
+#pragma mark -- layout
 - (void)setupAllViews {
     
     // arrayWithCapacity:方法，初始化可变数组对象的长度,如果后面代码继续添加数组超过长度以后长度会自动扩充。（即：创建一个可变的数组长度为_viewControllers.count）
@@ -81,6 +82,18 @@
     self.collectionView.frame = CGRectMake(0, _titleHeight, self.frame.size.width, self.frame.size.height - _titleHeight);
 }
 
-
+#pragma mark -- 重写KVO ，发现属性变化后会调用的方法
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    CGPoint offset = self.collectionView.contentOffset;
+    // 在这里‘+0.5’ 是为了当滚动到页面一半的时候，就已经算作下一页或者上一页
+    CGFloat pageFloat = offset.x / self.collectionView.bounds.size.width + 0.5;
+    if (pageFloat < 0) {
+        pageFloat = 0;
+    } else if (pageFloat > _viewControllers.count) {
+        pageFloat = _viewControllers.count;
+    }
+    NSInteger page = (NSInteger)pageFloat;
+    self.titleView.page = page;
+}
 
 @end
