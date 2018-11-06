@@ -6,11 +6,12 @@
 //  Copyright © 2018 kilolumen. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
+
 /*
  *    LSegmentView 是item（LSegmentViewTitleItem）和itemContent（LSegmentItemsContentView）结合在一起
  *
  */
-#import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -20,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIColor *highlightColor;  // 选中颜色
 @property (nonatomic, strong) UIFont *font;             // 字体
 
-- (instancetype)initWithFrame:(CGRect)frame titleHeight:(CGFloat)height viewControllers:(NSArray <UIViewController *>)viewControllers;
+- (instancetype)initWithFrame:(CGRect)frame titleHeight:(CGFloat)height viewControllers:(NSArray <UIViewController *> *)viewControllers;
 
 @end
 
