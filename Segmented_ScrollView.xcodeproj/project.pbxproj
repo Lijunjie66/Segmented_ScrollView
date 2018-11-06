@@ -16,6 +16,7 @@
 		9C1C24DE218C52EA00463CCA /* LSegmentViewTitleItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1C24DD218C52EA00463CCA /* LSegmentViewTitleItem.m */; };
 		9C3E9287218FE93D007A8183 /* UIView+Sizes.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3E9286218FE93D007A8183 /* UIView+Sizes.m */; };
 		9C3E928D2190407C007A8183 /* LSegmentItemsContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3E928C2190407C007A8183 /* LSegmentItemsContentView.m */; };
+		9C3E9290219137C5007A8183 /* LSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3E928F219137C5007A8183 /* LSegmentView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,8 @@
 		9C3E928A218FF5FD007A8183 /* Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Header.h; sourceTree = "<group>"; };
 		9C3E928B2190407C007A8183 /* LSegmentItemsContentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSegmentItemsContentView.h; sourceTree = "<group>"; };
 		9C3E928C2190407C007A8183 /* LSegmentItemsContentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSegmentItemsContentView.m; sourceTree = "<group>"; };
+		9C3E928E219137C5007A8183 /* LSegmentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSegmentView.h; sourceTree = "<group>"; };
+		9C3E928F219137C5007A8183 /* LSegmentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSegmentView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +111,8 @@
 				9C1C24DD218C52EA00463CCA /* LSegmentViewTitleItem.m */,
 				9C3E928B2190407C007A8183 /* LSegmentItemsContentView.h */,
 				9C3E928C2190407C007A8183 /* LSegmentItemsContentView.m */,
+				9C3E928E219137C5007A8183 /* LSegmentView.h */,
+				9C3E928F219137C5007A8183 /* LSegmentView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -188,6 +193,7 @@
 				9C3E9287218FE93D007A8183 /* UIView+Sizes.m in Sources */,
 				9C3E928D2190407C007A8183 /* LSegmentItemsContentView.m in Sources */,
 				9C1C24C8218C502500463CCA /* AppDelegate.m in Sources */,
+				9C3E9290219137C5007A8183 /* LSegmentView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
