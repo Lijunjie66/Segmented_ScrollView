@@ -8,6 +8,7 @@
 
 #import "LSegmentView.h"
 #import "LSegmentItemsContentView.h"
+#import "LSegmentViewUnitCollectionViewCell.h"
 
 // 在类的延展中有这样一些属性和变量
 @interface LSegmentView ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, LSegmentItemsContentViewDelegate>
@@ -68,8 +69,8 @@
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     
-    // 注意！！！ 这里为‘collectionView’ 注册 ‘cell’ (LSegmentViewUnit)，下文提到
-    //self.collectionView registerClass:<#(nullable Class)#> forCellWithReuseIdentifier:<#(nonnull NSString *)#>
+    // 注意！！！ 这里为‘collectionView’ 注册 ‘cell’ (LSegmentViewUnitCell)，下文提到
+    [self.collectionView registerClass:[LSegmentViewUnitCollectionViewCell class] forCellWithReuseIdentifier:@"LSegmentViewUnitCollectionViewCell"];
     
     // 注意！！！ 这里为‘collectionView’ 添加观察者，观察属性‘contentOffset’的变化，来获取页数，控制‘itemContent’选择哪一个‘item’
     [self.collectionView addObserver:self forKeyPath:@"contentOffset" options:(NSKeyValueObservingOptionNew) context:nil];
@@ -84,7 +85,7 @@
 
 #pragma mark -- 重写KVO ，发现属性变化后会调用的方法
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
-    CGPoint offset = self.collectionView.contentOffset;
+    CGPoint offset = self.collectionView.contentOffset; // 我们使用了KVO对collectionView进行了属性观察
     // 在这里‘+0.5’ 是为了当滚动到页面一半的时候，就已经算作下一页或者上一页
     CGFloat pageFloat = offset.x / self.collectionView.bounds.size.width + 0.5;
     if (pageFloat < 0) {
@@ -94,6 +95,36 @@
     }
     NSInteger page = (NSInteger)pageFloat;
     self.titleView.page = page;
+}
+
+#pragma mark -- 实现collectionView 的协议方法，及 itemContent的协议方法
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return _viewControllers.count;
+}
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return 1;
+}
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    LSegmentViewUnitCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"LSegmentViewUnitCollectionViewCell" forIndexPath:indexPath];
+    UIViewController *VC = _viewControllers[indexPath.section];
+//    if (!VC.isFirstResponder) {
+//        [VC loadViewIfNeeded];
+//    }
+    cell.view = VC.view;
+    
+    return cell;
+}
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return collectionView.bounds.size;
+}
+- (void)didSelectedButtonAtIndex:(NSInteger)index {
+    CGFloat width = self.collectionView.bounds.size.width;
+    [self.collectionView setContentOffset:(CGPointMake(width *index, 0)) animated:YES];
+}
+
+#pragma mark -- 非常重要的一点！我们使用了KVO对collectionView进行了属性观察，但是如果观察者被释放了，肯定会出现问题，所以我们需要在 LSegmentView 中重写，-(void)dealloc方法，在dealloc中 移除 对collectionView的s观察。
+- (void)dealloc {
+    [self.collectionView removeObserver:self forKeyPath:@"contentOffset"];
 }
 
 @end
